@@ -1,0 +1,8 @@
+id: b917e7a5-78fe-4ef1-9625-629e590c770b
+name: precomp-planner
+description: |
+  Planner suited for (pre-)compromise operation. Works like a batch planner, but imposes certain constraints to ensure succesful operation in multi-host environments.
+module: plugins.precomp.app.planners.planner
+params: {}
+ignore_enforcement_modules: []
+allow_repeatable_abilities: True

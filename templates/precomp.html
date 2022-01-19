@@ -1,0 +1,24 @@
+
+<link rel="stylesheet" href="/precomp/css/precomp.css">
+<script src="/precomp/js/precomp.js"></script>
+
+<div id="precomp-section" class="section-profile">
+    <div class="row">
+        <div class="topleft duk-icon"><img onclick="removeSection('precomp-section')" src="/gui/img/x.png"></div>
+
+        <!-- sidebar -->
+        <div id="precomp-sidebar-wrapper" class="column section-profile">
+            <h1>{{name}}</h1>
+            <p>{{description}}</p>
+            <div id="precomp-sidebar">
+                <button type="button" class="button-success atomic-button" onclick="precompFunction()">Click me!</button>
+            </div>
+        </div>
+
+        <!-- main content -->
+        <div id="precomp-content" class="column">
+            <label for="precomp-data">Output</label>
+            <textarea id="precomp-data" class="column log-box" rows="10"></textarea>
+        </div>
+    </div>
+</div>

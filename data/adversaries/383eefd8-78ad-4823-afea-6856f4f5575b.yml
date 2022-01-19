@@ -1,0 +1,11 @@
+id: 383eefd8-78ad-4823-afea-6856f4f5575b
+name: precomp-scenario-vulnexp
+description: Exploit ProxyShell to gain initial access to remote machines
+atomic_ordering:
+  - 00837c5f-b757-4503-840b-c9fdec8ac2b7 # Perform active port scanning using Nmap
+  - 72d02ae7-0972-46c4-be19-39988c8fb13e # Perform vulnerability scanning using Nmap
+  - 7b8a9df6-ba88-47a5-8de1-b1d382d4eff9 # ProxyShell: gather emails
+  - f3369229-12b5-42b8-b26b-87262802d139 # ProxyShell: drop webshell
+  - 554cc237-02c1-423f-ba52-e612bd1b4d1c # ProxyShell: spawn Sandcat RCE agent
+  - 38b639c7-4812-4933-9356-c1877d1eec03 # Spawn Sandcat
+adversary_id: 383eefd8-78ad-4823-afea-6856f4f5575b

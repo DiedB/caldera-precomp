@@ -1,0 +1,24 @@
+- id: 72d02ae7-0972-46c4-be19-39988c8fb13e
+  name: Perform vulnerability scanning using Nmap
+  description: Perform vulnerability scanning using Nmap
+  tactic: reconnaissance
+  technique:
+    attack_id: T1595.002
+    name: "Active Scanning: Vulnerability Scanning"
+  platforms:
+    linux:
+      sh:
+        command: "nmap --script exchange-proxyshell -oX - -Pn -sC -p443 #{target.remote.ip}"
+        payloads:
+          - exchange-proxyshell.nse
+        parsers:
+          plugins.precomp.app.parsers.vuln_scan:
+            - source: target.vulnerability
+              edge: vulnerable_to
+              target: target.remote.ip
+
+  requirements:
+    - plugins.precomp.app.requirements.has_exchange:
+        - source: target.remote.port
+          edge: has_open_port
+          target: target.remote.ip

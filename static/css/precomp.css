@@ -1,0 +1,39 @@
+
+#precomp-section .row {
+    height: auto;
+    min-height: 350px;
+    background-color: black;
+    background-image: url('/precomp/img/background.jpg');
+    background-position: bottom right;
+    background-repeat: no-repeat;
+}
+
+#precomp-sidebar-wrapper {
+    flex: 15%;
+    padding: 0 1em 1em;
+    text-align: left;
+}
+
+#precomp-sidebar-wrapper > h1 {
+    font-size: 3em;
+    margin: 0;
+}
+
+#precomp-sidebar-wrapper > p {
+    font-size: 1em;
+}
+
+#precomp-sidebar button {
+    width: 100%;
+}
+
+#precomp-content {
+    flex: 85%;
+}
+
+#precomp-data {
+    width: 100%;
+    margin: 2em 0;
+    opacity: .5;
+    background-color: black;
+}

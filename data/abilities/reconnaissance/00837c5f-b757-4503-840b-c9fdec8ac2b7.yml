@@ -1,0 +1,29 @@
+- id: 00837c5f-b757-4503-840b-c9fdec8ac2b7
+  name: Perform active port scanning using Nmap
+  description: Perform active port scanning using Nmap
+  tactic: reconnaissance
+  technique:
+    attack_id: T1595.001
+    name: "Active Scanning: Scanning IP Blocks"
+  platforms:
+    linux:
+      sh:
+        command: "nmap -oX - -Pn -sC --top-ports 20 #{target.range}"
+        parsers:
+          plugins.precomp.app.parsers.port_scan:
+            - source: target.remote.port
+              edge: has_open_port
+              target: target.remote.ip
+        variations:
+          - description: Run Nmap as a Docker image
+            command: |
+              "docker run --rm -it instrumentisto/nmap -oX - -Pn -sC --top-ports 20 #{target.range} 2>/dev/null 1>output.txt;
+              "cat output.txt"
+    windows:
+      cmd:
+        command: "nmap.exe -oX - -Pn -sC --top-ports 20 #{target.range}"
+        parsers:
+          plugins.precomp.app.parsers.port_scan:
+            - source: target.remote.port
+              edge: has_open_port
+              target: target.remote.ip

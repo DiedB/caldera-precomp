@@ -1,0 +1,17 @@
+- id: 1b21c07f-3367-45eb-8231-64743bb292c1
+  name: Find email addresses on a public website
+  description: Find email addresses on a public website using Spiderfoot
+  tactic: reconnaissance
+  technique:
+    attack_id: T1589.002
+    name: Email Addresses
+  platforms:
+    linux:
+      sh:
+        command: |
+          docker run --rm spiderfoot sf.py -m sfp_spider,sfp_email -s #{target.domain} -q -F EMAILADDR,EMAILADDR_GENERIC,AFFILIATE_EMAILADDR -o json 2>/dev/null 1>spiderfoot.txt
+          && cat spiderfoot.txt
+        cleanup: rm spiderfoot.txt
+        parsers:
+          plugins.precomp.app.parsers.spiderfoot_email:
+            - source: target.employee.email

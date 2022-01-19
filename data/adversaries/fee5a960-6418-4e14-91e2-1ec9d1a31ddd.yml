@@ -1,0 +1,10 @@
+id: fee5a960-6418-4e14-91e2-1ec9d1a31ddd
+name: precomp-scenario-spray
+description: Scan for public services on remote hosts and attempt to gain initial access by password spraying
+atomic_ordering:
+  - 1b21c07f-3367-45eb-8231-64743bb292c1 # Find email addresses on a public website
+  - 00837c5f-b757-4503-840b-c9fdec8ac2b7 # Perform active port scanning using Nmap
+  - 46ca03a2-ffdd-4b6b-878c-84f70d1df7d4 # Execute a password spray using Hydra
+  - bee06102-c9a1-42d9-8600-e910f310bdbb # Initialise RDP RCE Agent
+  - 38b639c7-4812-4933-9356-c1877d1eec03 # Spawn Sandcat
+adversary_id: fee5a960-6418-4e14-91e2-1ec9d1a31ddd

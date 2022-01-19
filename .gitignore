@@ -10,4 +10,3 @@
 .logs/*
 !.logs/.gitkeep
 data/uploads/*
-README.md

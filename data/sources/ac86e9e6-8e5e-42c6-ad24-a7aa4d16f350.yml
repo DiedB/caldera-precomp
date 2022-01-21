@@ -5,5 +5,9 @@ facts:
     value: "10.0.0.0/28"
   - trait: "target.domain"
     value: "evilcorp.com"
+  - trait: "internal.phishing.smtp.server"
+    value: "localhost:25"
+  - trait: "internal.phishing.from"
+    value: "username@evilcorp.com"
 rules: []
 relationships: []

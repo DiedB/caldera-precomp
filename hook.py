@@ -15,5 +15,8 @@ async def enable(services):
     app.router.add_route("GET", "/plugin/precomp/gui", precomp_gui.splash)
 
     precomp_api = PrecompAPI(services)
+
     # Add API routes here
-    app.router.add_route("POST", "/plugin/precomp/mirror", precomp_api.mirror)
+    app.router.add_route(
+        "GET", "/plugin/precomp/dropper", precomp_api.get_agent_dropper
+    )

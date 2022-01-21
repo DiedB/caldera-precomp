@@ -1,0 +1,23 @@
+- id: 849a38ab-6fd2-4c2f-817a-a07c9d60fbf4
+  name: Enumerate e-mail addresses through ProxyShell SSRF
+  description: Enumerate organisation e-mail addresses through ProxyShell SSRF
+  tactic: initial-access
+  technique:
+    attack_id: T1190
+    name: "Exploit Public-Facing Application"
+  platforms:
+    linux:
+      sh:
+        command: "chmod +x ./proxyshell-enumerate && ./proxyshell-enumerate -u '#{target.remote.ip}'"
+        timeout: 60
+        payloads:
+          - proxyshell-enumerate
+        parsers:
+          plugins.precomp.app.parsers.email:
+            - source: target.employee.email
+  requirements:
+    # TODO: make a dynamic requirement, allowing configuration of vulnerability?
+    - plugins.precomp.app.requirements.is_vuln_proxyshell:
+        - source: target.vulnerability
+          edge: vulnerable_to
+          target: target.remote.ip

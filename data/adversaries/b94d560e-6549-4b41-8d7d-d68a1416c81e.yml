@@ -1,0 +1,8 @@
+id: b94d560e-6549-4b41-8d7d-d68a1416c81e
+name: precomp-scenario-phish
+description: Scan for email addresses on a public domain, pack a Sandcat agent dropper into a maldoc and send it via email
+atomic_ordering:
+  - 1b21c07f-3367-45eb-8231-64743bb292c1 # Find email addresses on a public website
+  - ebd7ebd0-2a8e-4f83-adc0-4e13cbd47082 # Generate maldoc
+  - 7b8a9df6-ba88-47a5-8de1-b1d382d4eff9 # Send malicious payload via email
+adversary_id: b94d560e-6549-4b41-8d7d-d68a1416c81e

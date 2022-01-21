@@ -1,24 +1,15 @@
 - id: 7b8a9df6-ba88-47a5-8de1-b1d382d4eff9
-  name: Enumerate e-mail addresses through ProxyShell SSRF
-  description: Enumerate organisation e-mail addresses through ProxyShell SSRF
+  name: Send phishing email with malicious attachment
+  description: Send phishing email with malicious attachment
   tactic: initial-access
   technique:
-    attack_id: T1190
-    name: "Exploit Public-Facing Application"
+    attack_id: T1566.001
+    name: "Phishing: Spearphishing Attachment"
   platforms:
     linux:
       sh:
-        # TODO: replace server variable with #{app.contact.http} or #{server}, when CALDERA fact population issues are solved
-        command: "chmod +x ./proxyshell-enumerate && ./proxyshell-enumerate -u '#{target.remote.ip}'"
+        command: "python3 send_mail.py --template trickbot.eml --attachment '#{internal.payloads.maldoc-b64}' --server '#{internal.phishing.smtp.server}' --sender #{internal.phishing.from} --receiver #{target.employee.email}"
         timeout: 60
         payloads:
-          - proxyshell-enumerate
-        parsers:
-          plugins.precomp.app.parsers.email:
-            - source: target.employee.email
-  requirements:
-    # TODO: make a dynamic requirement, allowing configuration of vulnerability?
-    - plugins.precomp.app.requirements.is_vuln_proxyshell:
-        - source: target.vulnerability
-          edge: vulnerable_to
-          target: target.remote.ip
+          - send_mail.py
+          - trickbot.eml

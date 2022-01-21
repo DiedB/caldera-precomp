@@ -29,7 +29,8 @@ The plugin implements two types of adversaries - ones that follow predefined sce
 #### Scenarios
 
 - `precomp-scenario-vulnexp` scans the IP range for public-facing Microsoft Exchange servers and checks whether they are vulnerable to ProxyShell (CVE-2021-34473, CVE-2021-34523, and CVE-2021-31207). If it finds any vulnerable hosts, it exploits the vulnerability, extracting all email addresses from the Exchange Server and dropping a webshell. The webshell is then used to spawn a Sandcat agent on the remote Exchange server.
-- `precomp-scenario-spray` scans public-facing websites for e-mail addresses and the target IP range for public-facing RDP servers. The resulting information is used to execute a password spray against RDP. If successful, the adversary logs in to RDP and spawns a Sandcat agent on the remote host.
+- `precomp-scenario-spray` scans public-facing websites for email addresses and the target IP range for public-facing RDP servers. The resulting information is used to execute a password spray against RDP. If successful, the adversary logs in to RDP and spawns a Sandcat agent on the remote host.
+- `precomp-scenario-phish` scans public-facing websites for email addresses, generates a malicious Office document which - when macros are enabled - calls back to the CALDERA server which hosts a PowerShell dropper. On execution of this dropper, a Sandcat agent is spawned on the remote host. The email is based on a payload `.eml` file.
 
 #### Autonomous
 
@@ -37,10 +38,12 @@ The plugin implements two types of adversaries - ones that follow predefined sce
 
 ### Fact sources
 
+This plugin needs two types of fact sources - `target` sources that define the scope of the operation, and `internal` sources that are necessary for configuring the plugin itself.
+
 - `target.domain` takes a domain name (`example.com`)
 - `target.range` takes an IP address or range of addresses in CIDR notation (`10.0.0.0/28`)
 
-These fact traits can be instantiated multiple times.
+Most `internal` fact traits are necessary to execute phishing campaigns and are self-explanatory - see [the included sources file](data/sources/ac86e9e6-8e5e-42c6-ad24-a7aa4d16f350.yml) for their traits and example values.
 
 ### Planning
 

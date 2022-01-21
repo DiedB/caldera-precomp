@@ -1,9 +1,6 @@
-from re import A
 from aiohttp import web
 import os
 from urllib.parse import unquote, urlparse
-
-from app.service.auth_svc import for_all_public_methods, check_authorization
 
 
 PAYLOAD_DIR = os.path.realpath("plugins/precomp/data/payloads/")
